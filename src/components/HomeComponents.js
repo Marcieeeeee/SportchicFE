@@ -1,7 +1,6 @@
 import { Col, Container, Card, Row, Button, Image,  } from 'react-bootstrap';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import Home from '../pages/Home';
 import iklanImage from "../assets/images/iklan.png"
 import brandImage from "../assets/images/nike.png"
 import brandImage2 from "../assets/images/adidas.png"
@@ -13,10 +12,41 @@ import produkImage3 from "../assets/images/shoes/shoes3.png"
 import produkImage4 from "../assets/images/shoes #2/sptu4 -nike-.png"
 import aboutImage from "../assets/images/shoes #2/sptu5 -nike-.png"
 import { useNavigate } from "react-router-dom"
-
+import axios from "axios";
+import swal from "sweetalert";
 
 const HomeComponents = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const history = useNavigate();
+
+    const logoutSubmit = (e) => {
+        e.preventDefault();
+
+        axios.post(`/api/logout`).then(res =>{
+            if(res.data.status === 200) {
+                localStorage.removeItem('auth_token');
+                localStorage.removeItem('auth_name');
+                swal("Success",res.data.message,"sucess");
+                history('/')
+            }
+        });
+    }
+
+    const AuthButtons = localStorage.getItem('auth_token') ? (
+        <ul className="navbar-nav">
+            <Navbar.Text>
+                <Button variant="outline-dark" onClick={logoutSubmit} >Logout</Button>
+            </Navbar.Text>
+        </ul>
+    ) : (
+        <ul className="navbar-nav">
+            <Navbar.Text>
+                <Button variant="outline-dark" onClick={() => navigate('/register')}>Sign In</Button>{' '}
+            </Navbar.Text>
+        </ul>
+    );
+    
+    
     return (
         <div>
             <div className='myBG'>
@@ -25,22 +55,21 @@ const HomeComponents = () => {
                     <Navbar.Brand href="/">SportChic</Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="me-auto">
-                        <Nav.Link href="/">Home</Nav.Link>
-                        <Nav.Link href="#brand">Categories</Nav.Link>
-                        <Nav.Link href="#populer">Populer</Nav.Link>
-                        <Nav.Link href="#about">About Us</Nav.Link>
-                        <Nav.Link href="#contact">Contact</Nav.Link>
-                    </Nav>
-                    <Nav>
-                    <Navbar.Collapse className="justify-content-end">
-                    <Navbar.Text>
-                        <Button variant="outline-dark" onClick={() => navigate('/login')}>SIGN IN</Button>{' '}
-                    </Navbar.Text>
-                    </Navbar.Collapse>
-                    </Nav>
+                        <Nav className="me-auto">
+                            <Nav.Link href="/">Home</Nav.Link>
+                            <Nav.Link href="#brand">Categories</Nav.Link>
+                            <Nav.Link href="#populer">Populer</Nav.Link>
+                            <Nav.Link href="#about">About Us</Nav.Link>
+                            <Nav.Link href="#contact">Contact</Nav.Link>
+                        </Nav>
+                        <Nav>
+                            <Navbar.Collapse className="justify-content-end">
+                                {AuthButtons}
+                            </Navbar.Collapse>
+                        </Nav>
                     </Navbar.Collapse>
                 </Container>
+
                 </Navbar>
                 <div className="intro">
                     <Container className="text-white text-left d-flex justify-content-left align-items-left">

@@ -5,6 +5,7 @@ import brandImage3 from "../assets/images/shoes/shoes3.png"
 import brandImage4 from "../assets/images/shoes #2/sptu4 -nike-.png"
 import { useNavigate } from "react-router-dom"
 
+
 const OrtuseghtComponents = () => {
     const navigate = useNavigate()
     return (
