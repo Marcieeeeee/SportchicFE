@@ -9,6 +9,10 @@ import Home from './pages/Home'
 import Chekout from './pages/Chekout';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
+import Dashboard from './components/admin-content/Dashboard';
+import Profile from './components/admin-content/profile';
+import AddProduk from './components/admin-content/AddProduct';
+import ViewProduk from './components/admin-content/ViewProduct';
 import axios from 'axios';
 
 axios.defaults.baseURL = "http://localhost:8000/";
@@ -32,7 +36,12 @@ const App =() => {
         <Route path='/Specs' element={<Specs/>} />
         <Route path='/Chekout' element={<Chekout />} />
         <Route path='/Login' element={<Login />} />
-        <Route path='/Register' element={<Register />} />  
+        <Route path='/Register' element={<Register />} /> 
+        <Route path="/admin" element={<Dashboard/>} />
+        <Route path="/admin/dashboard" element={<Dashboard/>} />
+        <Route path="/admin/profile" element={<Profile/>} /> 
+        <Route path="/admin/add-product" element={<AddProduk/>} /> 
+        <Route path="/admin/view-product" element={<ViewProduk/>} /> 
       </Routes>
     </Router>
   );

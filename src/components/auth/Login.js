@@ -31,7 +31,7 @@ function Login() {
                 if(res.data.status === 200) {
                     localStorage.setItem('auth_token', res.data.token);
                     localStorage.setItem('auth_name', res.data.username);
-                    swal("Success",res.data.message,"sucess");
+                    swal("Success",res.data.message,"success");
                     history('/')
                 } else if(res.data.status === 401) {
                     swal("warning",res.data.message,"warning");

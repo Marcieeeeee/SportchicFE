@@ -26,7 +26,7 @@ const HomeComponents = () => {
             if(res.data.status === 200) {
                 localStorage.removeItem('auth_token');
                 localStorage.removeItem('auth_name');
-                swal("Success",res.data.message,"sucess");
+                swal("Success",res.data.message,"success");
                 history('/')
             }
         });
