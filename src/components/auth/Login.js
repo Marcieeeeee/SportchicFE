@@ -54,12 +54,12 @@ function Login() {
                             <form onSubmit={loginSubmit}>
                                 <div className="form-group mb-3">
                                     <label>Email</label>
-                                    <input type="" name="email" onChange={handleInput} value={loginInput.email} className="form-control"/>
+                                    <input type="email" name="email" onChange={handleInput} value={loginInput.email} className="form-control"/>
                                     <span>{loginInput.error_list.email}</span>
                                 </div>
                                 <div className="form-group mb-3">
                                     <label>Password</label>
-                                    <input type="" name="password" onChange={handleInput} value={loginInput.password} className="form-control"/>
+                                    <input type="password" name="password" onChange={handleInput} value={loginInput.password} className="form-control"/>
                                     <span>{loginInput.error_list.password}</span>
                                 </div>
                                 <div className="form-group mb-3">

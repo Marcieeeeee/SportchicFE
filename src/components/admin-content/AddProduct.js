@@ -5,10 +5,72 @@ import Footer from '../admin/Footer';
 import '../../assets/admin/css/styles.css';
 import '../../assets/admin/js/scripts';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import swal from "sweetalert";
 
 function AddProduct() {
+
+    const [errorList, setError] = useState([])
+
+    const [categoryList, setCategoryList] = useState([])
+
+    useEffect(() => {
+        axios.get(`/api/all-category`).then(res =>{
+            if(res.data.status === 200) {
+                setCategoryList(res.data.category);
+            }
+        })
+    }, [])
+
+
+    const [productInput, setProduct] = useState({
+        category_id: '',
+        name: '',
+        price: '',
+        description: '',
+    })
+
+    const [picture, setPicture] = useState([])
+
+    const handleImage = (e) => {
+        setPicture({ image: e.target.files[0] });
+    }
+
+    const submitProduct = (e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('image', picture.image);
+        formData.append('category_id', productInput.category_id);
+        formData.append('name', productInput.name);
+        formData.append('price', productInput.price);
+        formData.append('description', productInput.description);
+
+        axios.post(`/api/store-product`, formData).then(res =>{
+            if(res.data.status === 200) {
+                swal("Success", res.data.message, "success");
+                setProduct({...productInput,
+                    category_id: '',
+                    name: '',
+                    price: '',
+                    description: '', 
+                });
+                setError([]);
+            } else if (res.data.status === 422) {
+                swal("All fields are mandatory","","error")
+                setError(res.data.error);
+            }
+        })
+    }
+
+    const handleInput = (e) => {
+        e.persist();
+        setProduct({...productInput, [e.target.name]: e.target.value });
+    }
+
     return (
-        <div classNameName="sb-nav-fixed">
+        <div className="sb-nav-fixed">
             <Navbar />
             <div id="layoutSidenav">
                 <div id="layoutSidenav_nav">
@@ -20,33 +82,51 @@ function AddProduct() {
                         <div className="container-fluid px-4">
                             <div className="card mt-4">
                                 <div className="card-header">
-                                    <h4>Add Produk
+                                    <h4>Add Product
                                         <Link to="/admin/view-product" className="btn btn-success btn-sm float-end">View Product</Link>
                                     </h4>
                                 </div>
                                 <div className="card-body">
-                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                        <li class="nav-item">
-                                            <Link class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</Link>
-                                        </li>
-                                        <li class="nav-item">
-                                            <Link class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</Link>
-                                        </li>
-                                        <li class="nav-item">
-                                            <Link class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</Link>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content" id="myTabContent">
-                                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                            A
+                                    <form onSubmit={submitProduct} encType="multipart/form-data" >
+                                        <div className="tab-content" id="myTabContent">
+                                            <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                                <div className="form-group mb-3">
+                                                    <label>Select Category</label>
+                                                    <select name="category_id" onChange={handleInput} value={productInput.category_id} className="form-control">
+                                                        <option>Select option</option>
+                                                        {
+                                                            categoryList.map((item) => {
+                                                                return (
+                                                                    <option value={item.id} key={item.id}>{item.name}</option>
+                                                                )
+                                                            })
+                                                        }
+                                                    </select>
+                                                    <small className="text-danger">{errorList.category_id}</small>
+                                                </div>
+                                                <div className="form-group mb-3">
+                                                    <label>Product Name</label>
+                                                    <input type="text" name="name" onChange={handleInput} value={productInput.name} className="form-control" />
+                                                    <small className="text-danger">{errorList.name}</small>
+                                                </div>
+                                                <div className="form-group mb-3">
+                                                    <label>Image</label>
+                                                    <input type="file" name="image" onChange={handleImage} className="form-control" />
+                                                    <small className="text-danger">{errorList.image}</small>
+                                                </div>
+                                                <div className="form-group mb-3">
+                                                    <label>Price</label>
+                                                    <input type="text" name="price" onChange={handleInput} value={productInput.price} className="form-control" />
+                                                    <small className="text-danger">{errorList.price}</small>
+                                                </div>
+                                                <div className="form-group mb-3">
+                                                    <label>Description</label>
+                                                    <textarea name="description" onChange={handleInput} value={productInput.description} className="form-control"></textarea>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                            B
-                                        </div>
-                                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                                            C
-                                        </div>
-                                    </div>
+                                        <button type="submit" className="btn btn-success px-4 mt-2">Submit</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
