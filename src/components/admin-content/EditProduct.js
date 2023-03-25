@@ -9,11 +9,13 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import swal from "sweetalert";
 
-function AddProduct() {
+function EditProduct() {
 
     const [errorList, setError] = useState([])
 
     const [categoryList, setCategoryList] = useState([])
+
+    const [imagedata, setImagedata] = useState('')  
 
     useEffect(() => {
         axios.get(`/api/all-category`).then(res =>{
@@ -31,19 +33,17 @@ function AddProduct() {
         description: '',
     });
     
-    const [picture, setPicture] = useState(null);
-    
     const submitProduct = (e) => {
         e.preventDefault();
     
-        const formData = new FormData();
-        formData.append('image', picture);
-        formData.append('category_id', productInput.category_id);
-        formData.append('name', productInput.name);
-        formData.append('price', productInput.price);
-        formData.append('description', productInput.description);
+        const fData = new FormData();
+        fData.append('image', imagedata);
+        fData.append('category_id', productInput.category_id);
+        fData.append('name', productInput.name);
+        fData.append('price', productInput.price);
+        fData.append('description', productInput.description);
     
-        axios.post(`/api/store-product`, formData).then((res) => {
+        axios.post(`/api/store-product`, fData).then(res => {
             if (res.data.status === 200) {
                 swal('Success', res.data.message, 'success');
                 setProduct({
@@ -52,7 +52,7 @@ function AddProduct() {
                     price: '',
                     description: '',
                 });
-                setPicture(null);
+                setImagedata('');
                 setError([]);
             } else if (res.data.status === 422) {
                 swal('All fields are mandatory', '', 'error');
@@ -61,11 +61,13 @@ function AddProduct() {
         });
     };
     
+    const handleImage = file => {
+        setImagedata(file[0]);
+    }
+
     const handleInput = (e) => {
         e.persist();
-        if (e.target.type === 'file') {
-            setPicture(e.target.files[0]);
-        }
+        
         setProduct({
             ...productInput,
             [e.target.name]: e.target.value,
@@ -113,7 +115,7 @@ function AddProduct() {
                                                 </div>
                                                 <div className="form-group mb-3">
                                                     <label>Image</label>
-                                                    <input type="file" name="image" onChange={handleInput} className="form-control" />
+                                                    <input type="file" name="image" onChange={e => handleImage (e.target.file)} className="form-control" />
                                                     <small className="text-danger">{errorList.image}</small>
                                                 </div>
                                                 <div className="form-group mb-3">
@@ -140,4 +142,4 @@ function AddProduct() {
     )
 }
 
-export default AddProduct;
+export default EditProduct;

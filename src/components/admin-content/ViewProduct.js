@@ -33,8 +33,8 @@ function ViewProduct() {
                     <td>{item.category_id}</td>
                     <td>{item.name}</td>
                     <td>{item.price}</td>
-                    <td><img src={`http://localhost:8000/${item.image}`} width="50px" alt={item.name} /></td>
-                    <td><Link to="edit-product" className="btn btn-primary btn-sm">Edit</Link></td>
+                    <td><img src={`http://localhost:8000/${item.image}`} height="50px" width="100px" alt={item.name} align="center"/></td>
+                    <td><Link to={`/admin/edit-product/${item.id}`} className="btn btn-primary btn-sm">Edit</Link></td>
                     <td><button type="button" className="btn btn-danger btn-sm">Delete</button></td>
                 </tr>
             )

@@ -13,6 +13,7 @@ import Dashboard from './components/admin-content/Dashboard';
 import Profile from './components/admin-content/profile';
 import AddProduk from './components/admin-content/AddProduct';
 import ViewProduk from './components/admin-content/ViewProduct';
+import EditProduk from './components/admin-content/EditProduct';
 import axios from 'axios';
 
 axios.defaults.baseURL = "http://localhost:8000/";
@@ -42,6 +43,7 @@ const App =() => {
         <Route path="/admin/profile" element={<Profile/>} /> 
         <Route path="/admin/add-product" element={<AddProduk/>} /> 
         <Route path="/admin/view-product" element={<ViewProduk/>} /> 
+        <Route path="/admin/edit-product/:id" element={<EditProduk/>} /> 
       </Routes>
     </Router>
   );
