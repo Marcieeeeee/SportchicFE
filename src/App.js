@@ -14,6 +14,8 @@ import Profile from './components/admin-content/profile';
 import AddProduk from './components/admin-content/AddProduct';
 import ViewProduk from './components/admin-content/ViewProduct';
 import EditProduk from './components/admin-content/EditProduct';
+import ViewOrder from './components/admin-content/ViewOrder';
+import Coment from './components/Coment';
 import axios from 'axios';
 
 axios.defaults.baseURL = "http://localhost:8000/";
@@ -44,6 +46,8 @@ const App =() => {
         <Route path="/admin/add-product" element={<AddProduk/>} /> 
         <Route path="/admin/view-product" element={<ViewProduk/>} /> 
         <Route path="/admin/edit-product/:id" element={<EditProduk/>} /> 
+        <Route path="/admin/view-order" element={<ViewOrder/>} /> 
+        <Route path="/coment" element={<Coment/>} /> 
       </Routes>
     </Router>
   );

@@ -1,3 +1,5 @@
+import React from "react";
+import { useState, useEffect } from "react";
 import { Col, Container, Card, Row, Button, Image,  } from 'react-bootstrap';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -6,10 +8,6 @@ import brandImage from "../assets/images/nike.png"
 import brandImage2 from "../assets/images/adidas.png"
 import brandImage3 from "../assets/images/ortuseight.png"
 import brandImage4 from "../assets/images/specs.png"
-import produkImage from "../assets/images/shoes/shoes1.png"
-import produkImage2 from "../assets/images/shoes/shoes2.png"
-import produkImage3 from "../assets/images/shoes/shoes3.png"
-import produkImage4 from "../assets/images/shoes #2/sptu4 -nike-.png"
 import aboutImage from "../assets/images/shoes #2/sptu5 -nike-.png"
 import { useNavigate } from "react-router-dom"
 import axios from "axios";
@@ -18,6 +16,36 @@ import swal from "sweetalert";
 const HomeComponents = () => {
     const navigate = useNavigate();
     const history = useNavigate();
+    const [viewProduct, setProduct] = useState([])
+
+    useEffect(() => {
+        axios.get(`/api/view-all`).then(res =>{
+            if(res.data.status === 200) {
+                setProduct(res.data.product);
+            }
+        })
+    }, [])
+
+    var display_Productdata = "";
+
+    display_Productdata = viewProduct.map( (item) => {
+        return (
+            <Col md={3} className="produkWrapper mt-3" key={item.id}>
+                <Card className="text-dark produkImg">
+                    <Image src={`http://localhost:8000/${item.image}`} alt="Card image" className="img" />
+                    <div>
+                        <div className="p-2 m-1">
+                            <Card.Title>{item.name}</Card.Title>
+                            <Card.Text>Rp. {item.price}</Card.Text>
+                            <div>
+                                <Button variant="success" onClick={() => navigate('/chekout', { state: { product: item } })} className="width: 100%">BUY</Button>
+                            </div>
+                        </div>
+                    </div>  
+                </Card>
+            </Col>
+        )
+    } )
 
     const logoutSubmit = (e) => {
         e.preventDefault();
@@ -60,7 +88,7 @@ const HomeComponents = () => {
                             <Nav.Link href="#brand">Categories</Nav.Link>
                             <Nav.Link href="#populer">Populer</Nav.Link>
                             <Nav.Link href="#about">About Us</Nav.Link>
-                            <Nav.Link href="#contact">Contact</Nav.Link>
+                            <Nav.Link href="/coment">Coment</Nav.Link>
                         </Nav>
                         <Nav>
                             <Navbar.Collapse className="justify-content-end">
@@ -118,69 +146,7 @@ const HomeComponents = () => {
                     <h1 id="populer">Populer Product</h1>
                     <br />
                     <Row>
-                        <Col md={3} className="produkWrapper mt-3">
-                        <Card className="text-dark produkImg">
-                            <Image src={produkImage} alt="Card image" className="img" />
-                            <div>
-                                <div className="p-2 m-1">
-                                <Card.Title>Product Name</Card.Title>
-                                <Card.Text>
-                                Rp. XXX.XXX
-                                </Card.Text>
-                                <div>
-                                <Button variant="success">--- BUY ---</Button>
-                                
-                                </div>
-                                </div>
-                            </div>
-                                
-                        </Card>
-                        </Col>
-                        <Col md={3} className="produkWrapper mt-3">
-                        <Card className="text-dark produkImg">
-                            <Image src={produkImage2} alt="Card image" className="img"/>
-                            <div>
-                                <div className="p-2 m-1">
-                                <Card.Title>Product Name</Card.Title>
-                                <Card.Text>
-                                Rp. XXX.XXX
-                                </Card.Text>
-                                <Button variant="success">--- BUY ---</Button>
-                                </div>
-                            </div>
-                                
-                        </Card>
-                        </Col>
-                        <Col md={3} className="produkWrapper mt-3">
-                        <Card className="text-dark produkImg">
-                            <Image src={produkImage3} alt="Card image" className="img"/>
-                            <div>
-                                <div className="p-2 m-1">
-                                <Card.Title>Product Name</Card.Title>
-                                <Card.Text>
-                                Rp. XXX.XXX
-                                </Card.Text>
-                                <Button variant="success">--- BUY ---</Button>
-                                </div>
-                            </div>
-                                
-                        </Card>
-                        </Col>
-                        <Col md={3} className="produkWrapper mt-3">
-                        <Card className="text-dark produkImg">
-                            <Image src={produkImage4} alt="Card image" className="img"/>
-                            <div>
-                                <div className="p-2 m-1">
-                                <Card.Title>Product Name</Card.Title>
-                                <Card.Text>
-                                Rp. XXX.XXX
-                                </Card.Text>
-                                <Button variant="success">--- BUY ---</Button>
-                                </div>
-                            </div>
-                                
-                        </Card>
-                        </Col>
+                        {display_Productdata}
                     </Row>
                 </Container>  
             </div>

@@ -144,17 +144,17 @@ const CheckoutComponents = () => {
                   <div className="row">
                     <div className="col-md-6 mb-3">
                       <label className="custom-control-label">Product Name</label>
-                      <input name="product_name" type="text" value={product.name} className="form-control" readonly />
+                      <input name="product_name" type="text" value={product.name} className="form-control" readOnly />
                     </div>
                     <div className="col-md-6 mb-3">
                       <label className="custom-control-label">Product Price</label>
-                      <input name="product_price" type="text" value={product.price} className="form-control" readonly />
+                      <input name="product_price" type="text" value={product.price} className="form-control" readOnly />
                     </div>
                   </div>
                 <hr className="mb-4" />                
                 <h4 className="mb-3">Payment</h4>                
                   <div className="custom-control custom-radio">
-                    <input name="paymentMethod" type="radio" className="custom-control-input" required />
+                    <input name="paymentMethod" type="radio" className="custom-control-input" />
                     <label className="custom-control-label">Paypal</label>
                   </div>
                 <hr className="mb-4" />
