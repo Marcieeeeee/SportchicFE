@@ -1,5 +1,6 @@
 import './App.css';
 import "./style/landingpage.css"
+import "./style/comment.css"
 import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
 import Adidas from './pages/Adidas'
 import Nike from './pages/Nike';
@@ -10,12 +11,9 @@ import Chekout from './pages/Chekout';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Dashboard from './components/admin-content/Dashboard';
-import Profile from './components/admin-content/profile';
-import AddProduk from './components/admin-content/AddProduct';
 import ViewProduk from './components/admin-content/ViewProduct';
-import EditProduk from './components/admin-content/EditProduct';
 import ViewOrder from './components/admin-content/ViewOrder';
-import Coment from './components/Coment';
+import Comment from './components/Comment';
 import axios from 'axios';
 
 axios.defaults.baseURL = "http://localhost:8000/";
@@ -42,12 +40,9 @@ const App =() => {
         <Route path='/Register' element={<Register />} /> 
         <Route path="/admin" element={<Dashboard/>} />
         <Route path="/admin/dashboard" element={<Dashboard/>} />
-        <Route path="/admin/profile" element={<Profile/>} /> 
-        <Route path="/admin/add-product" element={<AddProduk/>} /> 
         <Route path="/admin/view-product" element={<ViewProduk/>} /> 
-        <Route path="/admin/edit-product/:id" element={<EditProduk/>} /> 
         <Route path="/admin/view-order" element={<ViewOrder/>} /> 
-        <Route path="/coment" element={<Coment/>} /> 
+        <Route path="/comment" element={<Comment/>} /> 
       </Routes>
     </Router>
   );

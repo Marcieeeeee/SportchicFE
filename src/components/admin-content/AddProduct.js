@@ -12,7 +12,6 @@ import swal from "sweetalert";
 function AddProduct() {
 
     const [errorList, setError] = useState([])
-
     const [categoryList, setCategoryList] = useState([])
 
     useEffect(() => {
@@ -31,13 +30,15 @@ function AddProduct() {
         description: '',
     });
     
-    const [picture, setPicture] = useState(null);
+    const [picture, setPicture] = useState([]);
     
     const submitProduct = (e) => {
         e.preventDefault();
     
         const formData = new FormData();
-        formData.append('image', picture);
+        picture.forEach(file => {
+            formData.append('image[]', file);
+        });        
         formData.append('category_id', productInput.category_id);
         formData.append('name', productInput.name);
         formData.append('price', productInput.price);
@@ -52,10 +53,10 @@ function AddProduct() {
                     price: '',
                     description: '',
                 });
-                setPicture(null);
+                setPicture([]);
                 setError([]);
             } else if (res.data.status === 422) {
-                swal('All fields are mandatory', '', 'error');
+                swal('Please Fill All the Fields', '', 'error');
                 setError(res.data.error);
             }
         });
@@ -64,7 +65,7 @@ function AddProduct() {
     const handleInput = (e) => {
         e.persist();
         if (e.target.type === 'file') {
-            setPicture(e.target.files[0]);
+            setPicture([...e.target.files]);
         }
         setProduct({
             ...productInput,

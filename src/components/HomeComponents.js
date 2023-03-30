@@ -88,7 +88,7 @@ const HomeComponents = () => {
                             <Nav.Link href="#brand">Categories</Nav.Link>
                             <Nav.Link href="#populer">Populer</Nav.Link>
                             <Nav.Link href="#about">About Us</Nav.Link>
-                            <Nav.Link href="/coment">Coment</Nav.Link>
+                            <Nav.Link href="/comment">Comment</Nav.Link>
                         </Nav>
                         <Nav>
                             <Navbar.Collapse className="justify-content-end">

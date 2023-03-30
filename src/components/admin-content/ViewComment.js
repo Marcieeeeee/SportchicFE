@@ -7,34 +7,32 @@ import '../../assets/admin/js/scripts';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-function ViewProduct() {
+function ViewComment() {
 
     const [loading, setLoading] = useState(true)
-    const [viewProduct, setProduct] = useState([])
+    const [comment, setcomment] = useState([])
 
     useEffect(() => {
-        axios.get(`/api/view-product`).then(res =>{
+        axios.get(`/api/view-comment`).then(res =>{
             if(res.data.status === 200) {
-                setProduct(res.data.product);
+                setcomment(res.data.comments);
                 setLoading(false);
             }
         })
     }, [])
 
-    var display_Productdata = "";
+    var display_Comment = "";
 
     if (loading) {
-        return <h4>Loading View Product Loading...</h4>
+        return <h4>View Comment Loading...</h4>
     } else {
-        display_Productdata = viewProduct.map( (item) => {
+        display_Comment = comment.map( (item) => {
             return (
                 <tr key={item.id}>
                     <td>{item.id}</td>
-                    <td>{item.category_id}</td>
-                    <td>{item.name}</td>
-                    <td>{item.price}</td>
-                    <td><img src={`http://localhost:8000/${item.image}`} height="50px" width="100px" alt={item.name} align="center"/></td>
-                    <td><button type="button" className="btn btn-danger btn-sm">Delete</button></td>
+                    <td>{item.username}</td>
+                    <td>{item.email}</td>
+                    <td>{item.comment}</td>
                 </tr>
             )
         } )
@@ -53,9 +51,7 @@ function ViewProduct() {
                         <div className="container-fluid px-4">
                             <div className="card px-4 mt-3">
                                 <div className="card-header">
-                                    <h4>View Product
-                                        <Link to="/admin/add-product" className="btn btn-success btn-sm float-end">Add Product</Link>
-                                    </h4>
+                                    <h4>View comment</h4>
                                 </div>
                                 <div className="card-body">
                                     <div className="table-responsive">
@@ -63,15 +59,13 @@ function ViewProduct() {
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Category</th>
-                                                    <th>Name</th>
-                                                    <th>Price</th>
-                                                    <th>Image</th>
-                                                    <th>Delete</th>
+                                                    <th>Username</th>
+                                                    <th>Email</th>
+                                                    <th>Comment</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {display_Productdata}
+                                                {display_Comment}
                                             </tbody>
                                         </table>
                                     </div>
@@ -86,4 +80,4 @@ function ViewProduct() {
     )
 }
 
-export default ViewProduct;
+export default ViewComment;
