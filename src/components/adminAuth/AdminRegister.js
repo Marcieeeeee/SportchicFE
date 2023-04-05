@@ -1,10 +1,10 @@
 import React from 'react';
-import Navbar from '../Navbar';
-import Sidebar from '../Sidebar';
-import Footer from '../Footer';
+import Navbar from '../admin/Navbar';
+import Sidebar from '../admin/Sidebar';
+import Footer from '../admin/Footer';
 import '../../assets/admin/css/styles.css';
-import '../../../assets/admin/js/scripts';
-import { Link } from 'react-router-dom';
+import '../../assets/admin/js/scripts';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import swal from "sweetalert";
@@ -34,12 +34,12 @@ function AddProduct() {
         }
 
         axios.get('/sanctum/csrf-cookie').then(response => {
-            axios.post(`/api/register`, data).then(res =>{
+            axios.post(`/api/registerAdmin`, data).then(res =>{
                 if(res.data.status === 200) {
                     localStorage.setItem('auth_token', res.data.token);
                     localStorage.setItem('auth_name', res.data.username);
                     swal("Success",res.data.message,"success");
-                    history('/')
+                    history('/admin/dashboard')
                 } else {
                     setRegister({...registerInput, error_list: res.data.validation_errors });
                 }
@@ -61,7 +61,6 @@ function AddProduct() {
                             <div className="card mt-4">
                                 <div className="card-header">
                                     <h4>Register Admin
-                                        <Link to="/admin/view-product" className="btn btn-success btn-sm float-end">View Product</Link>
                                     </h4>
                                 </div>
                                 <div className="card-body">
@@ -75,7 +74,7 @@ function AddProduct() {
                                                 </div>
                                                 <div className="form-group mb-3">
                                                     <label>Email</label>
-                                                    <input type="email" name="email" onChange={handleInput} value={registerInput.password} className="form-control" />
+                                                    <input type="email" name="email" onChange={handleInput} value={registerInput.email} className="form-control" />
                                                     <small className="text-danger">{registerInput.error_list.email}</small>
                                                 </div>
                                                 <div className="form-group mb-3">

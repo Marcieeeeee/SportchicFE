@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import axios from "axios";
 import swal from "sweetalert";
 
@@ -27,12 +27,12 @@ function Login() {
         }
 
         axios.get('/sanctum/csrf-cookie').then(response => {
-            axios.post(`/api/login`, data).then(res =>{
+            axios.post(`/api/loginAdmin`, data).then(res =>{
                 if(res.data.status === 200) {
                     localStorage.setItem('auth_token', res.data.token);
                     localStorage.setItem('auth_name', res.data.username);
                     swal("Success",res.data.message,"success");
-                    history('/')
+                    history('/admin/dashboard')
                 } else if(res.data.status === 401) {
                     swal("warning",res.data.message,"warning");
                 }else {
@@ -64,9 +64,6 @@ function Login() {
                                 </div>
                                 <div className="form-group mb-3">
                                     <button type="submit" className="btn btn-success">Login</button>
-                                </div>
-                                <div onClick={() => history('/register')}>
-                                    Don't have an account? <Link>Register Now</Link>
                                 </div>
                             </form>
                         </div>

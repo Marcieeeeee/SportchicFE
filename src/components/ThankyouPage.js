@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import { Card, Container, Nav, Navbar, Row, Col, Image, Button } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
-import swal from "sweetalert"
+import swal from 'sweetalert'
 
-function NikeComponents () 
+function ThankyouPage () 
 {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(true)
@@ -37,42 +37,7 @@ function NikeComponents ()
             </Navbar.Text>
         </ul>
     );
-
-    useEffect(() => {
-        axios.get(`/api/view-nike`).then(res =>{
-            if(res.data.status === 200) {
-                setProduct(res.data.product);
-                setLoading(false);
-            }
-        })
-    }, [])
-
-    var display_Productdata = "";
-
-    if (loading) {
-        return <h4>Loading View Product Loading...</h4>
-    } else {
-        display_Productdata = viewProduct.map( (item) => {
-            return (
-                <Col md={3} className="produkWrapper mt-3" key={item.id}>
-                    <Card className="text-dark produkImg">
-                        <Image src={`http://localhost:8000/${item.image}`} alt="Card image" className="img" />
-                        <div>
-                            <div className="p-2 m-1">
-                                <Card.Title>{item.name}</Card.Title>
-                                <small>{item.description}</small>
-                                <Card.Text>Rp. {item.price}</Card.Text>
-                                <div>
-                                    <Button variant="success" onClick={() => navigate('/chekout', { state: { product: item } })} className="width: 100%">BUY</Button>
-                                </div>
-                            </div>
-                        </div>  
-                    </Card>
-                </Col>
-            )
-        } )
-    }
-
+    
     return (
         <div className="bgProduk">
             <Navbar collapseOnSelect expand="lg" variant="light">
@@ -98,11 +63,8 @@ function NikeComponents ()
             <Container>
                 <br />
                 <br />
-                <h1 id="populer" className="title text-center text-white">Nike</h1>
+                <h1 id="populer" className="title text-center text-white">Thank You For Ordering!</h1>
                 <br />
-                <Row>
-                    {display_Productdata}
-                </Row>
             </Container>
             
         </div>
@@ -110,4 +72,4 @@ function NikeComponents ()
     )
 }
 
-export default NikeComponents
+export default ThankyouPage

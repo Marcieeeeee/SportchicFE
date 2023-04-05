@@ -58,6 +58,7 @@ const   SpecsComponents = () => {
                         <div>
                             <div className="p-2 m-1">
                                 <Card.Title>{item.name}</Card.Title>
+                                <small>{item.description}</small>
                                 <Card.Text>Rp. {item.price}</Card.Text>
                                 <div>
                                     <Button variant="success" onClick={() => navigate('/chekout', { state: { product: item } })} className="width: 100%">BUY</Button>

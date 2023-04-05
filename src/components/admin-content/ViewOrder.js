@@ -35,7 +35,6 @@ function ViewOrder() {
                     <td>{item.address}</td>
                     <td>{item.country}</td>
                     <td>{item.state}</td>
-                    <td><Link to="#" className="btn btn-primary btn-sm">View</Link></td>
                 </tr>
             )
         } )
@@ -67,7 +66,6 @@ function ViewOrder() {
                                                     <th>Address</th>
                                                     <th>Country</th>
                                                     <th>State</th>
-                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

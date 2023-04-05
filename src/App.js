@@ -12,8 +12,14 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Dashboard from './components/admin-content/Dashboard';
 import ViewProduk from './components/admin-content/ViewProduct';
+import AddProduct from './components/admin-content/AddProduct';
+import EditProduct from './components/admin-content/EditProduct';
 import ViewOrder from './components/admin-content/ViewOrder';
+import ViewComment from './components/admin-content/ViewComment';
+import AdminLogin from './components/adminAuth/AdminLogin';
+import AdminRegister from './components/adminAuth/AdminRegister';
 import Comment from './components/Comment';
+import Thankyou from './components/ThankyouPage';
 import axios from 'axios';
 
 axios.defaults.baseURL = "http://localhost:8000/";
@@ -38,11 +44,16 @@ const App =() => {
         <Route path='/Chekout' element={<Chekout />} />
         <Route path='/Login' element={<Login />} />
         <Route path='/Register' element={<Register />} /> 
-        <Route path="/admin" element={<Dashboard/>} />
+        <Route path="/admin" element={<AdminLogin/>} />
+        <Route path="/admin/register" element={<AdminRegister/>} />
         <Route path="/admin/dashboard" element={<Dashboard/>} />
         <Route path="/admin/view-product" element={<ViewProduk/>} /> 
+        <Route path="/admin/add-product" element={<AddProduct/>} /> 
+        <Route path="/admin/edit-product/:id" element={<EditProduct/>} /> 
         <Route path="/admin/view-order" element={<ViewOrder/>} /> 
+        <Route path="/admin/view-comment" element={<ViewComment/>} /> 
         <Route path="/comment" element={<Comment/>} /> 
+        <Route path="/thankyoupage" element={<Thankyou/>} /> 
       </Routes>
     </Router>
   );

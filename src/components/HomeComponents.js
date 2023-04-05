@@ -69,7 +69,7 @@ const HomeComponents = () => {
     ) : (
         <ul className="navbar-nav">
             <Navbar.Text>
-                <Button variant="outline-dark" onClick={() => navigate('/register')}>Sign In</Button>{' '}
+                <Button variant="outline-dark" onClick={() => navigate('/login')}>Sign In</Button>{' '}
             </Navbar.Text>
         </ul>
     );
@@ -106,7 +106,7 @@ const HomeComponents = () => {
                         <div className="title">The Best Store Ever Of</div>
                         <div className="title">Shoes In The World!</div>
                         <div className="introButton mt-4 text-left">
-                            <Button variant="success">Get Started</Button>
+                            <Button variant="success" onClick={() => navigate('/register')}>Get Started</Button>
                         </div>
                         </Col>
                     </Row>
